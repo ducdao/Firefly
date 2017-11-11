@@ -12,6 +12,7 @@ import AVFoundation
 class ViewController: UIViewController {
     let deviceId = UIDevice.current.identifierForVendor!.uuidString
     var lightOn: Bool = false
+    var interval: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +20,8 @@ class ViewController: UIViewController {
         
         let count = 100
         
-        postId()
+        postIdJSON()
+        getTimingJSON("https://test.christianjohansen.com/timing?id=" + deviceId + "\"")
         
         for index in 0...count {
             setLightFlag(index)
@@ -76,7 +78,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func postId() {
+    func postIdJSON() {
         let url = URL(string: "https://test.christianjohansen.com/register")!
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -103,7 +105,7 @@ class ViewController: UIViewController {
     }
     
     // Function that gets JSON from some API
-    func getJSON(_ apiString: String) {
+    func getTimingJSON(_ apiString: String) {
         var jsonData : JSON?
         
         let session = URLSession(configuration: URLSessionConfiguration.default)
@@ -116,7 +118,7 @@ class ViewController: UIViewController {
                 
                 // TODO: Make send setThreadArray as a parameter
                 print("Initializing array of threads")
-                self.setThreadList(jsonData!)
+                self.interval = jsonData!["interval"].int!
             }
         }
         
