@@ -10,7 +10,6 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, UITextFieldDelegate {
-    let masterService = MasterServiceManager()
     let deviceId: String = UIDevice.current.identifierForVendor!.uuidString
     @IBOutlet weak var seatNumber: UITextField!
     let backendURL = "https://test.christianjohansen.com/"
@@ -31,8 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         seatNumber.keyboardType = UIKeyboardType.numberPad
         seatNumber.delegate = self
-        
-        masterService.delegate = self as? MasterServiceManagerDelegate
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,7 +66,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         print("Start time: " + "\(self.times.startTime)")
         print("On duration: " + "\(self.times.onDuration)")
         print("Off duration: " + "\(self.times.offDuration)")
-        print("End duration: " + "\(self.times.offDuration)")
+        print("End time: " + "\(self.times.endTime)")
         
         // Get how long the phone is gonna wait until things get lit
         let waitTime = self.times.startTime - NSDate().timeIntervalSince1970
@@ -80,6 +77,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Timer.scheduledTimer(timeInterval: waitTime, target: self,
                              selector: #selector(startLighting),
                              userInfo: nil, repeats: false)
+    }
+    
+    @IBAction func masterButton(_ sender: Any) {
+        lightButton(self)
     }
     
     @objc func startLighting() {
@@ -198,21 +199,4 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         task.resume()
     }
-}
-
-extension ViewController: MasterServiceManagerDelegate {
-    
-    /*func connectedDevicesChanged(manager: MasterServiceManager, connectedDevices: [String]) {
-        OperationQueue.main.addOperation {
-            self.connectionsLabel.text = "Connections: \(connectedDevices)"
-        }
-    }*/
-    
-    func activateLights(manager: MasterServiceManager, colorString: String) {
-        OperationQueue.main.addOperation {
-                NSLog("%@", "Unknown color value received: \(colorString)")
-         
-        }
-    }
-    
 }
