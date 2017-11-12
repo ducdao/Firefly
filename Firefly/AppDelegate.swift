@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Firefly
 //
-//  Created by Matt Hanna on 11/11/17.
+//  Created by Duc Dao on 11/11/17.
 //  Copyright © 2017 SLOFirefly. All rights reserved.
 //
 
