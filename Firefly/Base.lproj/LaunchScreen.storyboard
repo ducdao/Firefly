@@ -29,8 +29,12 @@
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="firefly-logo-500x.png" translatesAutoresizingMaskIntoConstraints="NO" id="27T-lU-luz">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="firefly-logo-500x.png" translatesAutoresizingMaskIntoConstraints="NO" id="27T-lU-luz">
                                 <rect key="frame" x="132" y="207" width="110" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="J9H-L5-XkO"/>
+                                    <constraint firstAttribute="width" constant="110" id="cre-Zb-Rue"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.16078431372549018" green="0.71372549019607845" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -10,19 +10,29 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, UITextFieldDelegate {
+    let masterService = MasterServiceManager()
     let deviceId: String = UIDevice.current.identifierForVendor!.uuidString
     @IBOutlet weak var seatNumber: UITextField!
     let backendURL = "https://test.christianjohansen.com/"
     var lightOn: Bool = false
-    var startTime: Double = 0
-    var interval: UInt32 = 0
-    var endTime: Double = 0
+    
+    class Timing: NSObject {
+        var startTime: Double = 0
+        var onDuration: UInt32 = 0
+        var offDuration: UInt32 = 0
+        var endTime: Double = 0
+    }
+    
+    // All the timings we need for the phone
+    var times = Timing()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         seatNumber.keyboardType = UIKeyboardType.numberPad
         seatNumber.delegate = self
+        
+        masterService.delegate = self as? MasterServiceManagerDelegate
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,23 +51,52 @@ class ViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
         
         postIdJSON()
-        getTimingJSON(backendURL + "timing?id=" + deviceId)
+        
+        self.getTimingJSON {(json) in
+            self.times.startTime = json["startTime"].double!
+            print(self.times.startTime)
+            self.times.onDuration = useconds_t(json["onDuration"].int!)
+            print(self.times.onDuration)
+            self.times.offDuration = useconds_t(json["offDuration"].int!)
+            print(self.times.offDuration)
+            self.times.endTime = json["endTime"].double!
+            print(self.times.endTime)
+        }
+        
+        // Wait for POST call to set global variables
+        sleep(1)
+        
+        print("Start time: " + "\(self.times.startTime)")
+        print("On duration: " + "\(self.times.onDuration)")
+        print("Off duration: " + "\(self.times.offDuration)")
+        print("End duration: " + "\(self.times.offDuration)")
         
         // Get how long the phone is gonna wait until things get lit
-        let waitTime = self.startTime - Date().timeIntervalSince1970
+        let waitTime = self.times.startTime - NSDate().timeIntervalSince1970
+        print(NSDate().timeIntervalSince1970)
+        
         print("Wait time: " + "\(waitTime)")
         
         Timer.scheduledTimer(timeInterval: waitTime, target: self,
                              selector: #selector(startLighting),
-                             userInfo: nil, repeats: true)
+                             userInfo: nil, repeats: false)
     }
     
     @objc func startLighting() {
-        for index in 0...101 {
+        var stateFlag: Bool = true
+        
+        for index in 0...31 {
             setLightFlag()
             toggleTorch()
-            // Sleep in microseconds
-            usleep(self.interval * 1000)
+            // Sleep in microseconds, alternate between on and off duration
+            if (stateFlag) {
+                usleep(self.times.onDuration * 1000)
+                stateFlag = false
+            }
+            else {
+                usleep(self.times.offDuration * 1000)
+                stateFlag = true
+            }
             
             print("TOGGLING FLASHLIGHT...")
             print(index)
@@ -138,8 +177,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     // Function that gets JSON from some API
-    func getTimingJSON(_ apiString: String) {
+    func getTimingJSON(completion:@escaping (_ json: JSON) -> Void) {
         var jsonData: JSON?
+        let apiString = self.backendURL + "timing?id=" + self.deviceId
         
         let session = URLSession(configuration: URLSessionConfiguration.default)
         let request = URLRequest(url: URL(string: apiString)!)
@@ -150,11 +190,29 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 jsonData = JSON(data)
                 
                 print("Initializing interval...")
-                self.interval = useconds_t(jsonData!["interval"].int!)
-                print("Timing: " + "\(self.interval)")
+                
+                // Callback to see global variables
+                completion(jsonData!)
             }
         }
         
         task.resume()
     }
+}
+
+extension ViewController: MasterServiceManagerDelegate {
+    
+    /*func connectedDevicesChanged(manager: MasterServiceManager, connectedDevices: [String]) {
+        OperationQueue.main.addOperation {
+            self.connectionsLabel.text = "Connections: \(connectedDevices)"
+        }
+    }*/
+    
+    func activateLights(manager: MasterServiceManager, colorString: String) {
+        OperationQueue.main.addOperation {
+                NSLog("%@", "Unknown color value received: \(colorString)")
+         
+        }
+    }
+    
 }

@@ -18,6 +18,7 @@
 		92358CD21FB7FC1400978149 /* firefly_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 92358CD11FB7FC1400978149 /* firefly_logo.png */; };
 		92358CD41FB8077F00978149 /* firefly-logo-500x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92358CD31FB8077F00978149 /* firefly-logo-500x.png */; };
 		92358CD61FB807C100978149 /* firefly-logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 92358CD51FB807C100978149 /* firefly-logo.svg */; };
+		9237ABCC1FB8ECC70007D5BB /* MasterServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9237ABCB1FB8ECC70007D5BB /* MasterServiceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		92358CD11FB7FC1400978149 /* firefly_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefly_logo.png; sourceTree = "<group>"; };
 		92358CD31FB8077F00978149 /* firefly-logo-500x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firefly-logo-500x.png"; sourceTree = "<group>"; };
 		92358CD51FB807C100978149 /* firefly-logo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "firefly-logo.svg"; path = "../../Downloads/firefly-logo.svg"; sourceTree = "<group>"; };
+		9237ABCB1FB8ECC70007D5BB /* MasterServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterServiceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			children = (
 				92358CA11FB7B96F00978149 /* AppDelegate.swift */,
 				92358CA31FB7B96F00978149 /* ViewController.swift */,
+				9237ABCB1FB8ECC70007D5BB /* MasterServiceManager.swift */,
 				92358CCF1FB7BC0000978149 /* SwiftyJSON.swift */,
 				92358CA51FB7B96F00978149 /* Main.storyboard */,
 				92358CA81FB7B96F00978149 /* Assets.xcassets */,
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92358CD01FB7BC0000978149 /* SwiftyJSON.swift in Sources */,
+				9237ABCC1FB8ECC70007D5BB /* MasterServiceManager.swift in Sources */,
 				92358CA41FB7B96F00978149 /* ViewController.swift in Sources */,
 				92358CA21FB7B96F00978149 /* AppDelegate.swift in Sources */,
 			);
