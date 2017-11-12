@@ -14,12 +14,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var seatNumber: UITextField!
     let backendURL = "https://test.christianjohansen.com/"
     var lightOn: Bool = false
+    var startTime: Double = 0
     var interval: UInt32 = 0
+    var endTime: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        seatNumber.keyboardType = UIKeyboardType.numberPad
         seatNumber.delegate = self
     }
     
@@ -28,23 +30,33 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // Dismiss keyboard when selecting 'Return'
     func textFieldShouldReturn(_ seatNumber: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
     @IBAction func lightButton(_ sender: Any) {
-        let count = 101
-        
+        // Dismiss keyboard
         view.endEditing(true)
         
         postIdJSON()
         getTimingJSON(backendURL + "timing?id=" + deviceId)
         
-        for index in 0...count {
+        // Get how long the phone is gonna wait until things get lit
+        let waitTime = self.startTime - Date().timeIntervalSince1970
+        print("Wait time: " + "\(waitTime)")
+        
+        Timer.scheduledTimer(timeInterval: waitTime, target: self,
+                             selector: #selector(startLighting),
+                             userInfo: nil, repeats: true)
+    }
+    
+    @objc func startLighting() {
+        for index in 0...101 {
             setLightFlag()
             toggleTorch()
-            // Sleep for .25 seconds
+            // Sleep in microseconds
             usleep(self.interval * 1000)
             
             print("TOGGLING FLASHLIGHT...")
@@ -99,11 +111,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         request.httpMethod = "POST"
         
         // Construct POST JSON body
-        let postString = "{\"id\": \"" + self.deviceId + "\",\n" +
-            "\"seat\":" + seat + "}"
+        let postString = "{\"id\": \"" + self.deviceId + "\",\n" + "\"seat\":" + seat + "}"
         request.httpBody = postString.data(using: .utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
         // Check for fundamental networking error
         guard let data = data, error == nil else {
             print("error=\(String(describing: error))")
@@ -111,7 +123,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
             
         // Check for HTTP errors
-        if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+        if let httpStatus =
+            response as? HTTPURLResponse, httpStatus.statusCode != 200 {
         print("statusCode should be 200, but is \(httpStatus.statusCode)")
             print("response = \(String(describing: response))")
         }

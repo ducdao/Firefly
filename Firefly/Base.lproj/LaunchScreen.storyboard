@@ -10,8 +10,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="HelveticaNeueLights.ttc">
-            <string>HelveticaNeue-LightItalic</string>
+        <array key="Avenir.ttc">
+            <string>Avenir-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -23,17 +23,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firefly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdK-yu-Za8">
-                                <rect key="frame" x="136" y="319" width="103" height="49"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="42"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="firefly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdK-yu-Za8">
+                                <rect key="frame" x="134" y="315" width="107.5" height="57.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="42"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="firefly-logo-500x.png" translatesAutoresizingMaskIntoConstraints="NO" id="27T-lU-luz">
+                                <rect key="frame" x="132" y="207" width="110" height="100"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.59607843137254901" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.16078431372549018" green="0.71372549019607845" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="27T-lU-luz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="CE2-kA-u38"/>
                             <constraint firstItem="ZdK-yu-Za8" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="FF6-42-su5"/>
                             <constraint firstItem="ZdK-yu-Za8" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="RwD-jT-EQM"/>
+                            <constraint firstItem="ZdK-yu-Za8" firstAttribute="top" secondItem="27T-lU-luz" secondAttribute="bottom" constant="8" id="sa2-z2-o9S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -43,4 +48,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="firefly-logo-500x.png" width="960" height="870"/>
+    </resources>
 </document>
