@@ -70,7 +70,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // Get how long the phone is gonna wait until things get lit
         let waitTime = self.times.startTime - NSDate().timeIntervalSince1970
-        print(NSDate().timeIntervalSince1970)
+        print("Current time: " + "\(NSDate().timeIntervalSince1970)")
         
         print("Wait time: " + "\(waitTime)")
         
